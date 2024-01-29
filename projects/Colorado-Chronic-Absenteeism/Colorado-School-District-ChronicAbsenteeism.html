@@ -3141,8 +3141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="analysis" class="level2">
 <h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
-<p>The purpose of this analysis is to understand how chronic absenteeism is changing in Colorado both spatially and temporally.</p>
-<p><strong>Flesh this intro out a bit more, it needs something more.</strong></p>
+<p>Now that the data have been cleaned, transformed, and new features have been created, the analysis of the data can be performed. The purpose of this analysis is to understand how chronic absenteeism is changing in Colorado both spatially and temporally and what key insights can be taken from the analysis.</p>
 <section id="absentee-trends-for-colorado-school-districts" class="level3">
 <h3 class="anchored" data-anchor-id="absentee-trends-for-colorado-school-districts">Absentee trends for Colorado school districts</h3>
 <p>To begin, we create a line chart showing how the average chronic absenteeism changes for each <code>district_size</code> from 2016 - 2023. These are weighted averages that take into account the varying sizes of the individual school districts.</p>
@@ -3157,9 +3156,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> district_size_palette)<span class="sc">+</span></span>
 <span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"Percent Absentee"</span>,</span>
-<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"Absenteeism is increasing over time"</span>,</span>
-<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill=</span><span class="st">"District size"</span></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"Percent absentee"</span>,</span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"Chronic absenteeism is increasing over time"</span>,</span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour=</span><span class="st">"District size"</span></span>
 <span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Colorado-School-District-ChronicAbsenteeism_files/figure-html/absenteeism%20trends-1.png" class="img-fluid" width="672"></p>
@@ -3204,6 +3203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="spatial-variations-in-the-change-of-chronic-absenteeism-rates" class="level3">
 <h3 class="anchored" data-anchor-id="spatial-variations-in-the-change-of-chronic-absenteeism-rates">Spatial variations in the change of chronic absenteeism rates</h3>
+<p>The rate of change of chronic absenteeism varies from region to region throughout the state. As expected, smaller districts show the most variability due to their smaller enrollment numbers. Early rates of change may be the result of improved record keeping on this metric rather than a real change in the rate of chronic absenteeism. This would be consistent with the relative stability of rates in 2017-2018 and 2018-2019. As expected, the rate of change increases statewide during the pandemic before appearing to improve in 2022-2023.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>districts_shp <span class="sc">|&gt;</span> </span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(df_master, <span class="at">by=</span><span class="st">"district_code"</span>) <span class="sc">|&gt;</span> </span>
@@ -3234,6 +3234,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="Colorado-School-District-ChronicAbsenteeism_files/figure-html/percent%20change%20of%20absent%20rate%202017-2023-1.png" class="img-fluid" width="1440"></p>
 </div>
 </div>
+</section>
+<section id="student-enrollment" class="level3">
+<h3 class="anchored" data-anchor-id="student-enrollment">Student enrollment</h3>
+<p>Student enrollment was stable from the 2016-2017 to 2018-2019 school year. From 2019-2020 to 2022-2023 there was significant volatility in the total enrollment numbers for Colorado, with numbers return to pre-pandemic levels in the 2022-2023 school year.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>total_enrollment_year <span class="ot">&lt;-</span> df_master <span class="sc">|&gt;</span> </span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(school_year) <span class="sc">|&gt;</span> </span>
@@ -3243,18 +3247,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>total_enrollment_year <span class="sc">|&gt;</span> </span>
 <span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"school_year"</span>, <span class="at">values_from =</span> <span class="st">"total_enrollment"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>(<span class="at">id=</span><span class="st">"co-total-enrollment"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Colorado total enrollment 2016-2023"</span></span>
-<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">drop_trailing_zeros =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_css</span>(</span>
-<span id="cb63-15"><a href="#cb63-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">css =</span> <span class="st">"</span></span>
-<span id="cb63-16"><a href="#cb63-16" aria-hidden="true" tabindex="-1"></a><span class="st">    #co-total-enrollment .gt_table {</span></span>
-<span id="cb63-17"><a href="#cb63-17" aria-hidden="true" tabindex="-1"></a><span class="st">      width: 100%;</span></span>
-<span id="cb63-18"><a href="#cb63-18" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb63-19"><a href="#cb63-19" aria-hidden="true" tabindex="-1"></a><span class="st">    "</span></span>
-<span id="cb63-20"><a href="#cb63-20" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>(<span class="at">id=</span><span class="st">"co-total-enrollment"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">format_table</span>(<span class="st">"Colorado total enrollment 2016-2023"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div id="co-total-enrollment" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
@@ -3732,7 +3726,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>As the following plot shows, Colorado student enrollments are volatile in the 2019-2022 school years. The number of students enrolled fluctuates during the time that chronic absentee rates are peaking.</p>
+<p>As the following plot shows, Colorado student enrollments are volatile in the 2019-2022 school years. The number of students enrolled fluctuates significantly during the time that chronic absentee rates are peaking.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>total_enrollment_year <span class="sc">|&gt;</span> </span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -3753,6 +3747,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="Colorado-School-District-ChronicAbsenteeism_files/figure-html/visualise%20enrollment%20pct%20change-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>As this graph illustrates, there is a noticeable increase in enrollment in large districts in 2019-2020 followed by a nearly equally pronounced drop the following year. Enrollments are set early in the school year, so the increase in overall enrollment, and large districts’ uptake of more students is independent of the COVID-19 pandemic. The drop in total enrollment and large districts’ relative loss of students the following year may indicate a removal of students from the school system. There is another uptick in enrollment the following year, which aligns with the peak rate of chronic absenteeism observed from 2016 to 2023. It is unclear whether these phenomena are related or not.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>df_master <span class="sc">|&gt;</span> </span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(district_size, school_year) <span class="sc">|&gt;</span> </span>
@@ -3785,12 +3780,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="key-findings" class="level2">
 <h2 class="anchored" data-anchor-id="key-findings">Key findings</h2>
+<p>The seven school years from 2016 to 2023 are marked by a period of relative stability to one of increasing volatility of student enrollment and increased rates of chronic absenteeism during and after the COVID-19 pandemic. There are signs of improvement, but it is too early to tell if improvements in chronic absentee rates will continue.</p>
+<p>This analysis shows that:</p>
 <ul>
+<li>There are not pronounced region differences in rates of chronic absenteeism. The eastern plains do appear to have a somewhat lower rate than other regions, but it also has smaller school districts, in general, than other parts of the state.</li>
+<li>Smaller districts generally have lower rates of absenteeism than larger ones.</li>
+<li>About 7 in 10 Colorado students are enrolled in large school districts. Given that these districts also have higher rates of absenteeism, State efforts to address the problem should focus on these districts</li>
 <li>Chronic absenteeism is increasing between 2016 and 2023 with a noticeable increase in the rate of absenteeism during the COVID-19 pandemic.</li>
 <li>Rates of absenteeism appear to be declining, but it is too early to establish a trend.</li>
 <li>The pandemic appears to have caused a migration of students into and then out of larger school districts. This flux of students may have contributed to increased rates of absenteeism during this time.</li>
-<li>Smaller districts generally have rate rates of absenteeism than larger ones.</li>
-<li>About 7 in 10 Colorado students are enrolled in large school districts. Given that these districts also have higher rates of absenteeism, State efforts to address the problem should focus on these districts</li>
 </ul>
 </section>
 
